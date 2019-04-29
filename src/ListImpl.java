@@ -32,10 +32,42 @@ public class ListImpl {
         }
     }
 
-    /**Insert at the begining of a list*/
-    public void push(LinkedList linkedList, int data){
+    public Node getRandomNode(LinkedList linkedList, int length) {
+        Random random = new Random();
+        int position = random.nextInt(length);
+        Node node = linkedList.getHead();
+        int i = 0;
+        while (node.getNext() != null && i != position - 1) {
+            node = node.getNext();
+            i++;
+        }
+        if (node != null) {
+            System.out.println("Random Node Position" + "\t" + position + "\t" + "Data" + "\t" + node.getData());
+        }
+        return node;
+    }
+
+    /**
+     * Insert at the begining of a list
+     * Time Complexity O(1)
+     */
+    public void push(LinkedList linkedList, int data) {
         Node node = new Node(data);
         node.setNext(linkedList.getHead());
-        linkedList.setHead(node);;
+        linkedList.setHead(node);
+        ;
+    }
+
+    /**
+     * Insert after the given prevNode
+     * Time Complexity O(1)
+     */
+    public void insertAfter(Node prevNode, int data) {
+        if (prevNode == null) {
+            return;
+        }
+        Node newNode = new Node(data);
+        newNode.setNext(prevNode.getNext());
+        prevNode.setNext(newNode);
     }
 }
