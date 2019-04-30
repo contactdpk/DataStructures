@@ -24,12 +24,14 @@ public class ListImpl {
         return linkedList;
     }
 
-    public void printList(Node start) {
+    public void printList(LinkedList linkedList) {
         System.out.println("Print List----------------------");
+        Node start = linkedList.getHead();
         while (start != null) {
             System.out.print(start.getData() + "\t");
             start = start.getNext();
         }
+        System.out.println();
     }
 
     public Node getRandomNode(LinkedList linkedList, int length) {
@@ -69,5 +71,60 @@ public class ListImpl {
         Node newNode = new Node(data);
         newNode.setNext(prevNode.getNext());
         prevNode.setNext(newNode);
+    }
+
+    /**
+     * Insert node at the end of the list
+     * Time Complexity O(n)
+     */
+    public void append(LinkedList linkedList, int data) {
+        Node newNode = new Node(data);
+        Node node = linkedList.getHead();
+        if (node == null) {
+            linkedList.setHead(newNode);
+            return;
+        }
+        while (node.getNext() != null) {
+            node = node.getNext();
+        }
+        node.setNext(newNode);
+    }
+
+    /**
+     * Given a key, deletes the first occurrence of key in linked list
+     */
+    public void deleteNode(LinkedList linkedList, int dataKey) {
+        Node current = linkedList.getHead();
+        Node previous = null;
+        if (current != null && current.getData() == dataKey) {
+            linkedList.setHead(current.getNext());
+            return;
+        }
+        while (current != null && current.getData() != dataKey) {
+            previous = current;
+            current = current.getNext();
+        }
+        if (current == null) {
+            return;
+        }
+        previous.setNext(current.getNext());
+    }
+
+    public int lengthRecursive(Node node, int length) {
+        if (node == null) {
+            return length;
+        } else {
+            return lengthRecursive(node.getNext(), length + 1);
+        }
+    }
+
+    public boolean searchRecursive(Node node, int data) {
+        if (node == null) {
+            return false;
+        } else if (node.getData() == data) {
+            return true;
+        } else {
+            return searchRecursive(node.getNext(), data);
+        }
     }
 }
