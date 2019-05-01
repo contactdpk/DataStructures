@@ -127,4 +127,38 @@ public class ListImpl {
             return searchRecursive(node.getNext(), data);
         }
     }
+
+    /**
+     * Find the nth element from the end iteratively
+     */
+    public void printNthFromLastIterative(LinkedList linkedList, int n) {
+        if (n <= 0) {
+            return;
+        }
+        int length = lengthRecursive(linkedList.getHead(), 0);
+        if (n > length) {
+            return;
+        }
+        int indexFromFront = length - n;
+        Node current = linkedList.getHead();
+        for (int i = 0; i < indexFromFront; i++) {
+            current = current.getNext();
+        }
+        System.out.println(current.getData());
+    }
+
+    /**
+     * Find the nth element from the end recursively
+     */
+    static int count = 0;
+    public void printNthFromLastRecursively(Node node, int n) {
+       if(node == null){
+           return;
+       }
+       printNthFromLastRecursively(node.getNext(), n);
+       count = count+1;
+       if(count == n){
+           System.out.println(node.getData());
+       }
+    }
 }

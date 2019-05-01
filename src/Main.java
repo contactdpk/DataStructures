@@ -1,4 +1,3 @@
-import java.util.Random;
 import java.util.Scanner;
 
 public class Main {
@@ -15,7 +14,7 @@ public class Main {
         listImpl.insertAfter(listImpl.getRandomNode(linkedList, numberOfNodes), 999);
         listImpl.append(linkedList, 999);*/
         //System.out.println(listImpl.lengthRecursive(linkedList.getHead(), 0));
-        searchRecursiveDriver();
+        //searchRecursiveDriver();
     }
 
     private static void deleteNodeDriver() {
