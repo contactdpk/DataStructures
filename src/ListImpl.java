@@ -1,3 +1,4 @@
+import java.util.HashSet;
 import java.util.Random;
 
 /**
@@ -5,12 +6,12 @@ import java.util.Random;
  */
 public class ListImpl {
 
-    public LinkedList createLinkedList(int numberOfNodes, boolean printNodeData) {
+    public LinkedList createLinkedList(int numberOfNodes, boolean printNodeData, int bound) {
         Random random = new Random();
         LinkedList linkedList = new LinkedList();
         Node last = null;
         for (int i = 0; i < numberOfNodes; i++) {
-            Node node = new Node(random.nextInt(100));
+            Node node = new Node(random.nextInt(bound));
             if (linkedList.getHead() == null) {
                 linkedList.setHead(node);
             } else {
@@ -21,6 +22,50 @@ public class ListImpl {
                 System.out.println("Data " + (i + 1) + "\t" + node.getData());
             }
         }
+        return linkedList;
+    }
+
+    public LinkedList createLoopedLinkedList(int numberOfNodes, boolean printNodeData, int bound) {
+        Random random = new Random();
+        LinkedList linkedList = new LinkedList();
+        Node last = null;
+        for (int i = 0; i < numberOfNodes; i++) {
+            Node node = new Node(random.nextInt(bound));
+            if (linkedList.getHead() == null) {
+                linkedList.setHead(node);
+            } else {
+                last.setNext(node);
+            }
+            last = node;
+            if (printNodeData) {
+                System.out.println("Data " + (i + 1) + "\t" + node.getData());
+            }
+        }
+        last.setNext(linkedList.getHead().getNext());
+        return linkedList;
+    }
+
+    public LinkedList createOddPalindromeList() {
+        LinkedList linkedList = new LinkedList();
+        Node node1 = new Node(0);
+        Node node2 = new Node(1);
+        Node node3 = new Node(0);
+        linkedList.setHead(node1);
+        node1.setNext(node2);
+        node2.setNext(node3);
+        return linkedList;
+    }
+
+    public LinkedList createEvenPalindromeList() {
+        LinkedList linkedList = new LinkedList();
+        Node node1 = new Node(0);
+        Node node2 = new Node(1);
+        Node node3 = new Node(1);
+        Node node4 = new Node(0);
+        linkedList.setHead(node1);
+        node1.setNext(node2);
+        node2.setNext(node3);
+        node3.setNext(node4);
         return linkedList;
     }
 
@@ -151,14 +196,209 @@ public class ListImpl {
      * Find the nth element from the end recursively
      */
     static int count = 0;
+
     public void printNthFromLastRecursively(Node node, int n) {
-       if(node == null){
-           return;
-       }
-       printNthFromLastRecursively(node.getNext(), n);
-       count = count+1;
-       if(count == n){
-           System.out.println(node.getData());
-       }
+        if (node == null) {
+            return;
+        }
+        printNthFromLastRecursively(node.getNext(), n);
+        count = count + 1;
+        if (count == n) {
+            System.out.println(node.getData());
+        }
+    }
+
+    /**
+     * Find the middle element of linked list by using length
+     */
+    public void findMiddleElement1(LinkedList linkedList) {
+        int length = lengthRecursive(linkedList.getHead(), 0);
+        if (length <= 0) {
+            return;
+        }
+        int nodeIndex = length / 2;
+        Node current = linkedList.getHead();
+        while (nodeIndex > 0) {
+            current = current.getNext();
+            nodeIndex--;
+        }
+        System.out.println(current.getData());
+    }
+
+    /**
+     * Find the middle element of linked list by using two pointers
+     */
+    public void findMiddleElement2(LinkedList linkedList) {
+        Node slow, fast;
+        slow = fast = linkedList.getHead();
+        while (fast != null && fast.getNext() != null) {
+            slow = slow.getNext();
+            fast = fast.getNext().getNext();
+        }
+        System.out.println(slow.getData());
+    }
+
+    /**
+     * Find the middle element of linked list by incrementing when counter is odd
+     */
+    public void findMiddleElement3(LinkedList linkedList) {
+        Node mid = linkedList.getHead();
+        Node current = linkedList.getHead();
+        int count = 0;
+        while (current != null) {
+            if ((count & 1) == 1) { //check if count is odd
+                mid = mid.getNext();
+            }
+            count++;
+            current = current.getNext();
+        }
+        System.out.println(mid.getData());
+    }
+
+    /**
+     * Find how many times a number appears in a linked list
+     */
+    public void countIteratively(LinkedList linkedList, int data) {
+        int count = 0;
+        Node current = linkedList.getHead();
+        while (current != null) {
+            if (current.getData() == data) {
+                count++;
+            }
+            current = current.getNext();
+        }
+        System.out.println("Count = " + count);
+    }
+
+    /**
+     * Find how many times a number appears in a linked list
+     */
+    public int countRecursively(Node node, int data) {
+        if (node == null) {
+            return 0;
+        } else {
+            if (node.getData() == data) {
+                return 1 + countRecursively(node.getNext(), data);
+            } else {
+                return countRecursively(node.getNext(), data);
+            }
+        }
+    }
+
+    /**
+     * Detect loop in a linked list by hashing
+     */
+    public boolean detectLoopByHashing(LinkedList linkedList) {
+        HashSet<Node> set = new HashSet<>();
+        Node current = linkedList.getHead();
+        while (current != null) {
+            if (!set.add(current)) {
+                return true;
+            }
+            current = current.getNext();
+        }
+        return false;
+    }
+
+    /**
+     * Detect loop in a linked list by Floyd’s Cycle-Finding Algorithm
+     */
+    public boolean detectLoopByFloydsAlgo(LinkedList linkedList) {
+        Node slow, fast;
+        slow = fast = linkedList.getHead();
+        while (fast != null && fast.getNext() != null) {
+            slow = slow.getNext();
+            fast = fast.getNext().getNext();
+            if (fast == slow) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Function to check if given linked list is palindrome or not
+     */
+    public boolean isPalindrome(LinkedList linkedList) {
+        Node firstHalf = linkedList.getHead();
+        Node slow = linkedList.getHead();
+        Node fast = linkedList.getHead();
+        Node slowPrev = null;
+        Node mid = null;
+        while (fast != null && fast.getNext() != null) {
+            slowPrev = slow;
+            slow = slow.getNext();
+            fast = fast.getNext().getNext();
+        }
+        if (fast != null) {
+            mid = slow;
+            slow = slow.getNext();
+        }
+        slowPrev.setNext(null);
+        Node secondHalf = reverseLinkedList(slow);
+        boolean isPalindrome = compareList(firstHalf, secondHalf);
+        //Reconstruct the original list
+        secondHalf = reverseLinkedList(secondHalf);
+        if (mid != null) {
+            slowPrev.setNext(mid);
+            mid.setNext(secondHalf);
+        } else {
+            slowPrev.setNext(secondHalf);
+        }
+        return isPalindrome;
+    }
+
+    private boolean compareList(Node head1, Node head2) {
+        Node curr1 = head1;
+        Node curr2 = head2;
+        while (curr1 != null && curr2 != null) {
+            if (curr1.getData() != curr2.getData()) {
+                return false;
+            }
+            curr1 = curr1.getNext();
+            curr2 = curr2.getNext();
+        }
+        if (curr1 == null && curr2 == null) {
+            return true;
+        }
+        return false;
+    }
+
+
+    /**
+     * Function to check if given linked list is palindrome or not recursively
+     */
+    static Node left;
+    public boolean isPalindromeRecursiveHelper(Node right) {
+        this.left = right;
+        return isPalindromeRecursive(right);
+    }
+
+    private boolean isPalindromeRecursive(Node right) {
+        if (right == null) {
+            return true;
+        }
+        if (!isPalindromeRecursive(right.getNext())) {
+            return false;
+        }
+        boolean isCurrentDataEqual = right.getData() == left.getData();
+        left = left.getNext();
+        return isCurrentDataEqual;
+    }
+
+    /**
+     * Function to reverse a linked List
+     */
+    public Node reverseLinkedList(Node node) {
+        Node previous = null;
+        Node current = node;
+        Node next = null;
+        while (current != null) {
+            next = current.getNext();
+            current.setNext(previous);
+            previous = current;
+            current = next;
+        }
+        return previous;
     }
 }
