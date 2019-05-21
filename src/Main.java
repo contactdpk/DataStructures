@@ -11,7 +11,6 @@ public class Main {
         listImpl = new ListImpl();
         linkedList = listImpl.createLinkedList(numberOfNodes, false, bound);
         listImpl.printList(linkedList);
-        isPalindromeDriver();
     }
 
     private static void deleteNodeDriver() {
@@ -43,7 +42,7 @@ public class Main {
         System.out.println("Loop Found : " + listImpl.detectLoopByFloydsAlgo(linkedList));
     }
 
-    private static void isPalindromeDriver(){
+    private static void isPalindromeDriver() {
         System.out.println("Is Palindrome : " + listImpl.isPalindrome(linkedList));
         System.out.println("Is Palindrome : " + listImpl.isPalindromeRecursiveHelper(linkedList.getHead()));
         listImpl.printList(linkedList);
@@ -57,5 +56,17 @@ public class Main {
         System.out.println("Is Palindrome : " + listImpl.isPalindrome(evenPalindromeList));
         System.out.println("Is Palindrome : " + listImpl.isPalindromeRecursiveHelper(evenPalindromeList.getHead()));
         listImpl.printList(evenPalindromeList);
+    }
+
+    private static void swapNodesDriver() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Enter Nodes To Swap");
+        listImpl.swapNodes(linkedList, scanner.nextInt(), scanner.nextInt());
+    }
+
+    private static void sortedIntersectDriver() {
+        LinkedList listX = listImpl.createSortedLinkedList(5, 10, true);
+        LinkedList listY = listImpl.createSortedLinkedList(8, 15, false);
+        listImpl.sortedIntersect(listX, listY);
     }
 }
