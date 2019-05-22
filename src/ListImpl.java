@@ -369,6 +369,7 @@ public class ListImpl {
      * Function to check if given linked list is palindrome or not recursively
      */
     static Node left;
+
     public boolean isPalindromeRecursiveHelper(Node right) {
         this.left = right;
         return isPalindromeRecursive(right);
@@ -400,5 +401,28 @@ public class ListImpl {
             current = next;
         }
         return previous;
+    }
+
+    /**
+     * Function to pairwise swap elements of a linked list
+     */
+    public void pairwiseSwap(LinkedList linkedList) {
+        Node current = linkedList.getHead();
+        Node prevX = null;
+        Node nextX = null;
+        while (current != null && current.getNext() != null) {
+            nextX = current.getNext();
+            if (prevX == null) {
+                linkedList.setHead(nextX);
+            } else {
+                prevX.setNext(nextX);
+            }
+            current.setNext(nextX.getNext());
+            nextX.setNext(current);
+
+            prevX = current;
+            current = current.getNext();
+        }
+        printList(linkedList);
     }
 }
