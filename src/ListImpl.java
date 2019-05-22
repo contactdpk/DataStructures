@@ -69,6 +69,24 @@ public class ListImpl {
         return linkedList;
     }
 
+    public LinkedList createSortedLinkedList(int startData, int endData, boolean printNodeData) {
+        LinkedList linkedList = new LinkedList();
+        Node last = null;
+        for (int i = startData; i <= endData; i++) {
+            Node node = new Node(i);
+            if (linkedList.getHead() == null) {
+                linkedList.setHead(node);
+            } else {
+                last.setNext(node);
+            }
+            last = node;
+            if (printNodeData) {
+                System.out.println("Data " + i + "\t" + node.getData());
+            }
+        }
+        return linkedList;
+    }
+
     public void printList(LinkedList linkedList) {
         System.out.println("Print List----------------------");
         Node start = linkedList.getHead();
@@ -424,5 +442,73 @@ public class ListImpl {
             current = current.getNext();
         }
         printList(linkedList);
+    }
+
+    /**
+     * Function to swap two nodes of a linked list
+     */
+    public void swapNodes(LinkedList linkedList, int x, int y) {
+        printList(linkedList);
+        if (x == y) {
+            return;
+        }
+        Node prevX = null;
+        Node currX = linkedList.getHead();
+        while (currX != null && currX.getData() != x) {
+            prevX = currX;
+            currX = currX.getNext();
+        }
+        Node prevY = null;
+        Node currY = linkedList.getHead();
+        while (currY != null && currY.getData() != y) {
+            prevY = currY;
+            currY = currY.getNext();
+        }
+
+        if (currX == null || currY == null) { //Either x or y is not present
+            return;
+        }
+        if (prevX == null) { // If x is head
+            linkedList.setHead(currY);
+        } else {
+            prevX.setNext(currY);
+        }
+        if (prevY == null) { //If Y is head
+            linkedList.setHead(currX);
+        } else {
+            prevY.setNext(currX);
+        }
+        Node temp = currX.getNext();
+        currX.setNext(currY.getNext());
+        currY.setNext(temp);
+        printList(linkedList);
+    }
+
+    /**
+     * Function to create a linked list which is intersection of two sorted linked lists
+     */
+    public void sortedIntersect(LinkedList listX, LinkedList listY) {
+        LinkedList intersectionList = new LinkedList();
+        Node currentX = listX.getHead();
+        Node currentY = listY.getHead();
+        Node tailZ = null;
+        while (currentX != null && currentY != null) {
+            if (currentX.getData() == currentY.getData()) {
+                Node node = new Node(currentX.getData());
+                if (intersectionList.getHead() == null) {
+                    intersectionList.setHead(node);
+                } else {
+                    tailZ.setNext(node);
+                }
+                tailZ = node;
+                currentX = currentX.getNext();
+                currentY = currentY.getNext();
+            } else if (currentX.getData() < currentY.getData()) {
+                currentX = currentX.getNext();
+            } else {
+                currentY = currentY.getNext();
+            }
+        }
+        printList(intersectionList);
     }
 }
