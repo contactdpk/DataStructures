@@ -56,4 +56,38 @@ public class SortImpl {
         arr[end] = temp;
         return i;
     }
+
+    public void mergeSort(int[] arr, int start, int end) {
+        if (start < end) {
+            int mid = (start + end) / 2;
+            mergeSort(arr, start, mid);
+            mergeSort(arr, mid + 1, end);
+            merge(arr, start, mid, end);
+        }
+    }
+
+    private void merge(int[] arr, int start, int mid, int end) {
+        int[] sortedArr = new int[end - start + 1];
+        int i = start, j = mid + 1, k = 0;
+        while (i <= mid && j <= end) {
+            if (arr[i] <= arr[j]) {
+                sortedArr[k++] = arr[i++];
+            } else {
+                sortedArr[k++] = arr[j++];
+            }
+        }
+        if (i <= mid) {
+            while (i <= mid) {
+                sortedArr[k++] = arr[i++];
+            }
+        }
+        if (j <= end) {
+            while (j <= end) {
+                sortedArr[k++] = arr[j++];
+            }
+        }
+        for(int l = 0;l<sortedArr.length;l++){
+            arr[start++] = sortedArr[l];
+        }
+    }
 }
