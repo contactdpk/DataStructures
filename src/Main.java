@@ -11,6 +11,7 @@ public class Main {
         listImpl = new ListImpl();
         linkedList = listImpl.createLinkedList(numberOfNodes, false, bound);
         listImpl.printList(linkedList);
+        listImpl.printReverseRecursive(linkedList.getHead());
     }
 
     private static void deleteNodeDriver() {

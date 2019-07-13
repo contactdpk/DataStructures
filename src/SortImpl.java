@@ -28,7 +28,7 @@ public class SortImpl {
 
     public void quickSort(int[] arr, int start, int end) {
         if (start < end) {
-            int pivot = partition(arr, start, end);
+            int pivot = partition1(arr, start, end);
             quickSort(arr, start, pivot - 1);
             quickSort(arr, pivot + 1, end);
         }
@@ -53,6 +53,25 @@ public class SortImpl {
         }
         int temp = arr[i];
         arr[i] = pivot;
+        arr[end] = temp;
+        return i;
+    }
+
+    //Another approach to write the partition method for quick sort
+    private int partition1(int[] arr, int start, int end) {
+        int pivot = arr[end];
+        int i = start - 1;
+        for (int j = start; j < end; j++) {
+            if (arr[j] < pivot){
+                i++;
+                int temp = arr[i];
+                arr[i] = arr[j];
+                arr[j] = temp;
+            }
+        }
+        i++;
+        int temp = arr[i];
+        arr[i] = arr[end];
         arr[end] = temp;
         return i;
     }
@@ -86,7 +105,7 @@ public class SortImpl {
                 sortedArr[k++] = arr[j++];
             }
         }
-        for(int l = 0;l<sortedArr.length;l++){
+        for (int l = 0; l < sortedArr.length; l++) {
             arr[start++] = sortedArr[l];
         }
     }

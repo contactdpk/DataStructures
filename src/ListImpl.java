@@ -511,4 +511,54 @@ public class ListImpl {
         }
         printList(intersectionList);
     }
+
+    /**
+     * Function to segregate even and odd nodes in a Linked List
+     * @param linkedList
+     */
+    public void segregateEvenOdd(LinkedList linkedList) {
+        Node prev = null;
+        Node last = linkedList.getHead();
+        while (last.getNext() != null) {
+            last = last.getNext();
+        }
+        Node newLast = last;
+        Node current = linkedList.getHead();
+        while (current != last) {
+            if (current.getData() % 2 != 0) {
+                if (linkedList.getHead() == current) {
+                    Node node = current;
+                    newLast.setNext(node);
+                    newLast = node;
+                    linkedList.setHead(node.getNext());
+                    current = node.getNext();
+                    node.setNext(null);
+                } else {
+                    Node node = current;
+                    prev.setNext(current.getNext());
+                    current = current.getNext();
+                    newLast.setNext(node);
+                    newLast = node;
+                    node.setNext(null);
+                }
+            } else {
+                prev = current;
+                current = current.getNext();
+            }
+        }
+        if (newLast != last && last.getData() % 2 != 0) {
+            prev.setNext(current.getNext());
+            current.setNext(null);
+            newLast.setNext(current);
+        }
+    }
+
+    public void printReverseRecursive(Node node){
+        if(node == null){
+            return;
+        }else{
+            printReverseRecursive(node.getNext());
+            System.out.print(node.getData()+"\t");
+        }
+    }
 }
