@@ -1,3 +1,5 @@
+package linkedList;
+
 import java.util.Scanner;
 
 public class Main {
@@ -16,20 +18,20 @@ public class Main {
 
     private static void deleteNodeDriver() {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Enter Node Key To Delete");
+        System.out.println("Enter linkedList.Node Key To Delete");
         listImpl.deleteNode(linkedList, scanner.nextInt());
         listImpl.printList(linkedList);
     }
 
     private static void searchRecursiveDriver() {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Enter Node Key To Search");
+        System.out.println("Enter linkedList.Node Key To Search");
         System.out.println(listImpl.searchRecursive(linkedList.getHead(), scanner.nextInt()));
     }
 
     private static void countIterativeDriver() {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Enter Node Key To Count");
+        System.out.println("Enter linkedList.Node Key To Count");
         int dataToCount = scanner.nextInt();
         listImpl.countIteratively(linkedList, dataToCount);
         System.out.println("Count Recursive = " + listImpl.countRecursively(linkedList.getHead(), dataToCount));

@@ -1,3 +1,5 @@
+package linkedList;
+
 import java.util.HashSet;
 import java.util.Random;
 
@@ -107,7 +109,7 @@ public class ListImpl {
             i++;
         }
         if (node != null) {
-            System.out.println("Random Node Position" + "\t" + position + "\t" + "Data" + "\t" + node.getData());
+            System.out.println("Random linkedList.Node Position" + "\t" + position + "\t" + "Data" + "\t" + node.getData());
         }
         return node;
     }
